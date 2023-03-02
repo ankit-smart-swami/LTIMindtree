@@ -1,6 +1,6 @@
 --Query 1
 
---INSERT INTO building_type VALUES
+INSERT INTO building_type VALUES
 (1,"Ankit",1),
 (2,"Aditya",2),
 (3,"Amit",1),
