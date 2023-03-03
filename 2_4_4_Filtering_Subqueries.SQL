@@ -69,19 +69,38 @@ AND M.id = B.meter_id;
 
 ---------------------------------------
 --QUERY9
-
+SELECT m.meter_number
+FROM meter m, electricity_reading er
+WHERE m.id = er.meter_id AND
+er.day = '2018-05-07'
+ORDER BY m.meter_number ASC;
 
 ---------------------------------------
 --QUERY10
-
+SELECT bu.owner_name
+FROM building bu, meter m, bill b
+WHERE b.total_units IN
+		(SELECT MAX(total_units) FROM bill)
+AND b.meter_id = m.id 
+AND m.building_id = bu.id
+ORDER BY bu.owner_name ASC;
 
 ---------------------------------------
 --QUERY11
-
+SELECT m.meter_number
+FROM  meter m, bill b
+WHERE b.total_units IN
+		(SELECT MIN(total_units) FROM bill)
+AND b.meter_id = m.id 
+ORDER BY m.meter_number ASC;
 
 ---------------------------------------
 --QUERY12
-
+SELECT m.meter_number
+FROM  meter m, electricity_reading er
+WHERE er.h20 =
+		(SELECT MAX(h20) FROM electricity_reading)
+AND er.meter_id = m.id;
 
 ---------------------------------------
 --QUERY13
