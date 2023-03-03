@@ -79,14 +79,23 @@ ORDER BY owner_name ASC;
 
 ---------------------------------------
 --QUERY14
-
+SELECT * FROM bill
+WHERE DAY(payment_date) = '02'
+ORDER BY total_units DESC;
 
 ---------------------------------------
 --QUERY15
-
+SELECT due_date, payable_amount
+FROM bill WHERE payment_date
+NOT BETWEEN '2017-09-10' 
+AND '2017-10-10';
 
 ---------------------------------------
 --QUERY16
-
+SELECT due_date, payment_date,
+DATEDIFF(due_date,payment_date) 
+date_difference, payable_amount
+FROM bill WHERE 
+payment_date <= due_date;
 
 ---------------------------------------
