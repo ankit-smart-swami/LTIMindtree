@@ -104,34 +104,90 @@ AND er.meter_id = m.id;
 
 ---------------------------------------
 --QUERY13
-
+SELECT m.meter_number
+FROM  meter m, electricity_reading er
+WHERE er.h21 =
+		(SELECT MIN(h21) FROM electricity_reading)
+AND er.meter_id = m.id
+ORDER BY m.meter_number ASC;
 
 ---------------------------------------
 --QUERY14
-
+SELECT m.meter_number
+FROM meter m, bill b
+WHERE b.fine_amount IN
+	(SELECT MAX(fine_amount) FROM bill)
+AND m.id = b.meter_id;
 
 ---------------------------------------
 --QUERY15
-
+SELECT owner_name, contact_number
+FROM building
+WHERE id IN(
+	SELECT m.building_id
+	FROM meter m, bill b
+	WHERE b.month = 10 
+	AND b.meter_id = m.id)
+ORDER BY owner_name ASC;
 
 ---------------------------------------
 --QUERY16
-
+SELECT COUNT(*) AS payment_count
+FROM meter m, bill
+WHERE m.id = bill.meter_id
+AND bill.is_payed = 1
+AND m.building_id IN(
+  SELECT b.id FROM 
+  building b, building_type bt
+  WHERE bt.id = b.building_type_id
+  AND bt.connection_type_id IN(
+    SELECT id FROM electricity_connection_type
+    WHERE connection_name = 'Commercial'));
 
 ---------------------------------------
 --QUERY17
-
+SELECT b.address FROM
+building_type bt, building b
+WHERE bt.id = b.building_type_id
+AND bt.connection_type_id IN(
+  SELECT id FROM electricity_connection_type
+  WHERE connection_name = 'Home')
+ ORDER BY b.address ASC;
 
 ---------------------------------------
 --QUERY18
-
+SELECT bu.owner_name FROM
+electricity_reading er, meter m, building bu
+WHERE m.id = er.meter_id
+AND bu.id = m.building_id
+AND er.total_units IN(
+  SELECT MIN(total_units)
+  FROM electricity_reading);
 
 ---------------------------------------
 --QUERY19
-
+SELECT SUM(er.h20) total_amount, 
+AVG(er.h20) AS average_amount
+FROM meter m, electricity_reading er
+WHERE m.id = er.meter_id
+AND m.building_id IN(
+  SELECT b.id FROM  
+  building_type bt, building b
+  WHERE bt.id = b.building_type_id
+  AND bt.connection_type_id = 
+    (SELECT id FROM 
+    electricity_connection_type
+    WHERE connection_name = 'Commercial'));
 
 ---------------------------------------
 --QUERY20
-
+SELECT s.rate FROM
+building_type bt, slab s
+WHERE bt.connection_type_id = s.connection_type_id
+AND bt.id IN(
+  SELECT b.building_type_id
+  FROM building b, meter m
+  WHERE m.building_id = b.id
+  AND m.meter_number = 'SG567423');
 
 ---------------------------------------
