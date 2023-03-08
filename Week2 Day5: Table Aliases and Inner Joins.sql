@@ -124,14 +124,34 @@ ORDER BY s.name;
 
 -----------------------------
 --Query-13
-
+SELECT person_name, contact_number, balance
+FROM travel_card WHERE balance =(
+  SELECT DISTINCT balance 
+  FROM travel_card ORDER BY balance LIMIT 1,1)
+ORDER BY person_name DESC;
 
 -----------------------------
 --Query-14
-
+SELECT tc.person_name, tc.contact_number, 
+tc.balance, tp.entry_time, tp.exit_time
+FROM travel_card tc, travel_payment tp
+WHERE tp.travel_card_id = tc.id 
+AND tc.balance = (
+  SELECT  DISTINCT balance 
+  FROM travel_card ORDER BY balance 
+  DESC LIMIT 1,1)
+ORDER BY person_name;
 
 -----------------------------
 --Query-15
-
+SELECT tc.person_name, tc.contact_number,
+tc.balance FROM travel_card tc, travel_payment tp
+WHERE tc.id = tp.travel_card_id
+GROUP BY tc.id HAVING COUNT(tp.id)  = (
+	 SELECT COUNT(id) 
+	 FROM travel_payment 
+	 GROUP BY travel_card_id
+	 ORDER BY COUNT(id) DESC LIMIT 1)
+ORDER BY tc.person_name  DESC;
 
 -----------------------------
