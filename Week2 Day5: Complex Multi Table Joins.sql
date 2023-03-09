@@ -148,7 +148,7 @@ FROM
     INNER JOIN bill b ON m.id = b.meter_id)
 WHERE
     b.fine_amount = (SELECT 
-            SUM(b.fine_amount) AS S
+           DISTINCT SUM(b.fine_amount) AS S
         FROM
             meter m
                 INNER JOIN
@@ -157,7 +157,8 @@ WHERE
             b.fine_amount IS NOT NULL
         GROUP BY m.building_id
         ORDER BY S
-        LIMIT 1 , 1);
+        LIMIT 1 , 1)
+    ORDER BY bu.owner_name ASC;
 
 --------------------------------------------
 --Query-10
