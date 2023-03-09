@@ -162,6 +162,21 @@ WHERE
 
 --------------------------------------------
 --Query-10
-
+SELECT 
+    m.meter_number,
+    SUM(er.total_units) AS month_total_unit,
+    b.payable_amount,
+    (er.h6 + er.h7 + er.h8 + er.h9 + er.h10 + er.h11) AS morning,
+    (er.h12 + er.h13 + er.h14 + er.h15) AS afternoon,
+    (er.h16 + er.h17 + er.h18 + er.h19) AS evening,
+    (er.h20 + er.h21 + er.h22 + er.h23 + er.h24 + er.h1 + er.h2 + er.h3 + er.h4 + er.h5) AS night
+FROM
+    ((meter m
+    INNER JOIN bill b ON m.id = b.meter_id)
+    INNER JOIN electricity_reading er ON m.id = er.meter_id)
+WHERE
+    b.month = 12 AND b.year = 2017
+GROUP BY m.id
+ORDER BY er.total_units DESC;
 
 --------------------------------------------
