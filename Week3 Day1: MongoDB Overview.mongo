@@ -93,5 +93,20 @@ db.author.remove({_id : 201})
 
 //Query-7
 
+db.publisher.remove({})
 
+//Query-8
+
+db.books.remove({publisher_id  : 201})
+
+//Query-9
+
+db.author.find()
+db.author.update({_id : 41},
+                 {$rename : {
+                 phoneno : 'mobile',
+                 email_id : 'email'}})
+
+//Query-10
   
+db.publisher.update( {_id : 203}, {$set :  {pub_name : 'UniversityPress', country : 'US'}}, {upsert : true})
