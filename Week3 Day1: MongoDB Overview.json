@@ -73,12 +73,25 @@ db.author.insertMany(
   
 //Query-4
   
-  db.books.update(
+ db.books.update(
   	{"id" : 77},
   	{$set : {
   		"language" : "Sanskrit"
   }})
   
-  --Query-5
-  
+//Query-5
+
+db.books.update(
+  {"publisher_id" : 201},
+  {$set : {
+  		"published_date " : ISODate("2010-10-24")
+  }})
+
+//Query-6
+
+db.author.remove({_id : 201})
+
+//Query-7
+
+
   
