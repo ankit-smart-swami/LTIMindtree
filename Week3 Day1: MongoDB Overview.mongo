@@ -1,0 +1,84 @@
+--Query-1
+
+db.books.insertMany(
+  [
+    {
+    title : "Python",
+    author_id : 12,
+    published_date : '2018-12-06',
+    pages : 346,
+    language : ["Hindi","English"],
+    publisher_id : 2,
+    price : 653.7
+    },
+    {
+    title : "JAVA Core",
+    author_id : 6,
+    published_date : '2019-02-20',
+    pages : 244,
+    language : ["Hindi","English"],
+    publisher_id : 2,
+    price : 426.3
+    }])
+    
+--Query-2
+
+db.publisher.insertMany(
+  [
+   {
+    _id : 01,
+    pub_name : "Sikha Publication",
+    country : "India"
+    },
+    {
+    _id : 02,
+    pub_name : "Vidhya Publication",
+    country : "India"
+    }
+  ])
+  
+--Query-3
+
+db.author.insertMany(
+  [
+    {
+    author_name : {
+        firstname : "B",
+        middlename : "R",
+        lastname : "Thakur"},
+    age : 39,
+    gender : "male",
+    email_id : "brthakur@mail.com",
+    phoneno : "9876543654",
+    Address : {
+    	street : "45,Shyamla Hills",
+    	city : "mumbai",
+    	country : "India"}
+    },
+    {
+    author_name : {
+        firstname : "R",
+        middlename : "S",
+        lastname : "Agrawal"},
+    age : 45,
+    gender : "male",
+    email_id : "rsagrawal@mail.com",
+    phoneno : "7894562349",
+    Address : {
+    	street : "79,Satpuda Hills",
+    	city : "Ujjain",
+    	country : "India"}
+    }
+  ])
+  
+  --Query-4
+  
+  db.books.update(
+  	{"id" : 77},
+  	{$set : {
+  		"language" : "Sanskrit"
+  }})
+  
+  --Query-5
+  
+  
